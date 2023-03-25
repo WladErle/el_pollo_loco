@@ -1,5 +1,6 @@
 class Character extends MovableObject{
 
+   y= 265;
 
    // Constructor: Wird aufgerufen, wenn ein neues Objekt der Klasse erstellt wird. Sollte in jedem einzelnen Objekt vorhanden sein.
  constructor() {
