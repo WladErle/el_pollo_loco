@@ -2,7 +2,9 @@ class Character extends MovableObject {
 
     y = 175;
     height = 250;
-    width = 120;
+    width = 150;
+    speed = 20;
+
     IMAGES_WALKING= [
         'img_pollo_locco/img/2_character_pepe/2_walk/W-21.png',
         'img_pollo_locco/img/2_character_pepe/2_walk/W-22.png',
@@ -23,15 +25,28 @@ class Character extends MovableObject {
     }
 
     animate() {
-        
+
         setInterval(() => {
             if (this.world.keyboard.RIGHT) {
+                this.x += this.speed; 
+                this.otherDirection = false;
+            }
+
+            if (this.world.keyboard.LEFT) {
+                    this.x -= this.speed;
+                    this.otherDirection = true;
+                }
+            this.world.camera_x = -this.x;
+        }, 1000 / 24);
+        
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
         let i =  this.currentImage % this.IMAGES_WALKING.length;
         let path = this.IMAGES_WALKING[i];
         this.img=this.imageCache[path];
         this.currentImage++;
         }
-    }, 100);
+    }, 50);
 
     }
 
