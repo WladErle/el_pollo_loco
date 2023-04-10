@@ -12,7 +12,7 @@ class Character extends MovableObject {
         'img_pollo_locco/img/2_character_pepe/2_walk/W-26.png'
     ];
 
-   
+   world;
 
     // Constructor: Wird aufgerufen, wenn ein neues Objekt der Klasse erstellt wird. Sollte in jedem einzelnen Objekt vorhanden sein.
     constructor() {
@@ -23,13 +23,15 @@ class Character extends MovableObject {
     }
 
     animate() {
+        
         setInterval(() => {
+            if (this.world.keyboard.RIGHT) {
         let i =  this.currentImage % this.IMAGES_WALKING.length;
         let path = this.IMAGES_WALKING[i];
         this.img=this.imageCache[path];
         this.currentImage++;
-    }, 100
-    );
+        }
+    }, 100);
 
     }
 
