@@ -16,11 +16,11 @@ class MovableObject {
     }
 
     loadImages(arr) {
-            arr.forEach((path) => {
-                let img = new Image();
-                img.src = path;
-                this.imageCache[path] = img;
-            });
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
     }
 
 
@@ -31,6 +31,6 @@ class MovableObject {
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed;
-        }, 1000/100);
+        }, 1000 / 100);
     }
 }

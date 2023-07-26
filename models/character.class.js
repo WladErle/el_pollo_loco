@@ -5,7 +5,7 @@ class Character extends MovableObject {
     width = 150;
     speed = 20;
 
-    IMAGES_WALKING= [
+    IMAGES_WALKING = [
         'img_pollo_locco/img/2_character_pepe/2_walk/W-21.png',
         'img_pollo_locco/img/2_character_pepe/2_walk/W-22.png',
         'img_pollo_locco/img/2_character_pepe/2_walk/W-23.png',
@@ -14,7 +14,7 @@ class Character extends MovableObject {
         'img_pollo_locco/img/2_character_pepe/2_walk/W-26.png'
     ];
 
-   world;
+    world;
 
     // Constructor: Wird aufgerufen, wenn ein neues Objekt der Klasse erstellt wird. Sollte in jedem einzelnen Objekt vorhanden sein.
     constructor() {
@@ -27,26 +27,26 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT) {
-                this.x += this.speed; 
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                this.x += this.speed;
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT) {
-                    this.x -= this.speed;
-                    this.otherDirection = true;
-                }
-            this.world.camera_x = -this.x;
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.x -= this.speed;
+                this.otherDirection = true;
+            }
+            this.world.camera_x = -this.x + 100;
         }, 1000 / 24);
-        
+
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        let i =  this.currentImage % this.IMAGES_WALKING.length;
-        let path = this.IMAGES_WALKING[i];
-        this.img=this.imageCache[path];
-        this.currentImage++;
-        }
-    }, 50);
+                let i = this.currentImage % this.IMAGES_WALKING.length;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
+        }, 50);
 
     }
 
