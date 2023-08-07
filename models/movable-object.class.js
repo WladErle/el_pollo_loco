@@ -11,6 +11,7 @@ class MovableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    lastHit = 0;
 
 
     applyGravity() {
@@ -70,11 +71,20 @@ class MovableObject {
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
         }
     }
 
     isDead() {
         return this.energy == 0;
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
+        timepassed = timepassed / 1000; // Difference in s
+        return timepassed < 2;
+
     }
 
     loadImages(arr) {
@@ -99,7 +109,7 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.IMAGES_WALKING.length;
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
