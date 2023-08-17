@@ -1,4 +1,11 @@
-class MovableObject extends DrawableObject {
+class MovableObject {
+    x = 100;
+    y = 250;
+    img;
+    height = 120;
+    width = 100;
+    imageCache = [];
+    currentImage = 0;
     speed = 0.3;
     otherDirection = false;
     speedY = 0;
@@ -18,10 +25,36 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 180;
+        if (this instanceof ThorwableObject) { // Throwable object should always fall
+            return true;
+        } else {
+            return this.y < 180;
+        }
     }
 
-  
+
+
+    loadImage(path) {
+        this.img = new Image();
+        this.img.src = path;
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawFrame(ctx) {
+
+        // instanceof: Die Funktion wird nur an angehängten Objekten angewendet. 
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
     //character.isColliding(chicken)
     /*isColliding(obj) {
         return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
@@ -57,6 +90,15 @@ class MovableObject extends DrawableObject {
         return timepassed < 1;
 
     }
+
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
+    }
+
 
     moveRight() {
         this.x += this.speed;
