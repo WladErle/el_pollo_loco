@@ -1,11 +1,20 @@
+@font-face {
+    font-family: 'rye';
+    src: url('fonts/Rye-Regular.ttf') format('truetype');
+    /* Safari, Android, iOS */
+}
+
 body {
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: url('img_pollo_locco/img/5_background/desert.png');
+    font-family: 'rye', Arial, Helvetica, sans-serif;
+    letter-spacing: 2px;
 }
 
 canvas {
     background-color: black;
-}
+
