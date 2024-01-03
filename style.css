@@ -5,16 +5,20 @@
 }
 
 body {
+    background-color: blue;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: url('img_pollo_locco/img/5_background/desert.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
     font-family: 'rye', Arial, Helvetica, sans-serif;
     letter-spacing: 2px;
 }
 
 canvas {
     background-color: black;
-
+}

@@ -1,17 +1,18 @@
-class MovableObject {
-    x = 100;
-    y = 250;
-    img;
-    height = 120;
-    width = 100;
-    imageCache = [];
-    currentImage = 0;
+class MovableObject extends DrawableObject {
+     
     speed = 0.3;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    }
 
 
     applyGravity() {
@@ -25,55 +26,25 @@ class MovableObject {
     }
 
     isAboveGround() {
-        if (this instanceof ThorwableObject) { // Throwable object should always fall
+        if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
         } else {
             return this.y < 180;
         }
     }
-
-
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawFrame(ctx) {
-
-        // instanceof: Die Funktion wird nur an angehängten Objekten angewendet. 
-        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
-    //character.isColliding(chicken)
-    /*isColliding(obj) {
-        return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
-            (this.Y + this.offsetY + this.height) >= obj.Y &&
-            (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
-            obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
-    }*/
-
+    
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        return (
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+        );
     }
 
-    hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
+        hit() {
+        this.energy -= 1;
+        if (this.energy <= 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
@@ -88,17 +59,7 @@ class MovableObject {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
         return timepassed < 1;
-
     }
-
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
 
     moveRight() {
         this.x += this.speed;

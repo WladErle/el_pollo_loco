@@ -1,31 +1,32 @@
 
 class Bottles extends DrawableObject {
 
-    x = 100;
-    y = 150;
+    static lastX = 400;
+    y = 360;
     height = 70;
     width = 50;
 
     offset = {
-        top: 0,
-        left: 25,
-        right: 25,
-        bottom: 0
+        top: 2,
+        left: 20,
+        right: 20,
+        bottom: 2
     };
 
-    IMAGE_BOTTLE = [
+       IMAGE_BOTTLE = [
         'img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
-        'img_pollo_locco/img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
+        'img_pollo_locco/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
 
     constructor(x) {
         super();
         this.loadImages(this.IMAGE_BOTTLE);
-           this.setImage();
-        this.x = x + Math.random() * 500;
+         this.setImage();
+         this.x = Bottles.lastX + this.width + 1 + Math.random() * 250;
+         Bottles.lastX = this.x;
     }
 
-    setImage() {
+   setImage() {
         let path = this.IMAGE_BOTTLE[this.randomizer()];
         this.img = this.imageCache[path];
     }
@@ -33,4 +34,4 @@ class Bottles extends DrawableObject {
     randomizer() {
         return Math.floor(Math.random() * 2);
     }
-}
+}0
