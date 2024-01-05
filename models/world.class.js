@@ -10,6 +10,7 @@ class World {
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
+    collectedCoinsCount=0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -54,15 +55,14 @@ class World {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 console.log('Mit Coin kollidiert');
+                this.statusBarCoins.collectCoin();
                 //collectCoinSound.play();
                 //this.increaseCoinBar();
                 //this.coinCollected(coin);
-                this.statusBarCoins.setPercentage(this.character.setCoins);
+                
             }
          });
     }
-
-    
 
     draw() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -80,8 +80,8 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         // ------ Space for fixed objects -----
         this.addToMap(this.statusBarHealth);
-        this.addToMap(this.statusBarBottles);
         this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
         this.ctx.translate(this.camera_x, 0);
 
         
