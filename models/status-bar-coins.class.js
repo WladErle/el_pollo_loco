@@ -31,13 +31,13 @@ class StatusBarCoins extends DrawableObject {
     resolveImageIndex() {
             if (this.percentageCoins == 100) {
                     return 5;   
-                } else if (this.percentageCoins > 80) {
+                } else if (this.percentageCoins >= 80) {
                      return 4;
-                } else if (this.percentageCoins > 60) {
+                } else if (this.percentageCoins >= 60) {
                     return 3;
-                } else if (this.percentageCoins > 40) {
+                } else if (this.percentageCoins >= 40) {
                     return 2;
-                } else if (this. percentageCoins > 20) {
+                } else if (this. percentageCoins >= 20) {
                     return 1;
                 } else {
                     return 0;
@@ -45,8 +45,8 @@ class StatusBarCoins extends DrawableObject {
             }      
     
 
-        collectCoin() {
-            this.percentageCoins = this.percentageCoins + 10; 
+        collectCoin() { 
+            this.percentageCoins = this.percentageCoins + 20; 
             if (this.percentageCoins > 100) {
                 this.percentageCoins = 100;
             }

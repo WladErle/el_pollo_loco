@@ -30,6 +30,8 @@ class World {
             this.checkCollisionsEnemy();
             this.checkThrowObjects();
             this.checkCollectionCoins();
+            this.checkCollectionBottles();
+
         }, 200);
     }
 
@@ -52,10 +54,25 @@ class World {
     }
 
     checkCollectionCoins() {
-        this.level.coins.forEach((coin) => {
+        this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 console.log('Mit Coin kollidiert');
                 this.statusBarCoins.collectCoin();
+               this.level.coins.splice(index, 1);
+                //collectCoinSound.play();
+                //this.increaseCoinBar();
+                //this.coinCollected(coin);
+                
+            }
+         });
+    }
+
+    checkCollectionBottles() {
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                console.log('Mit Flasche kollidiert');
+                this.statusBarBottles.collectBottle();
+               this.level.bottles.splice(index, 1);
                 //collectCoinSound.play();
                 //this.increaseCoinBar();
                 //this.coinCollected(coin);
