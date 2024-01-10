@@ -27,7 +27,6 @@ class StatusBarCoins extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
-
     resolveImageIndex() {
             if (this.percentageCoins == 100) {
                     return 5;   
@@ -53,6 +52,7 @@ class StatusBarCoins extends DrawableObject {
             console.log(this.percentageCoins);
             this.setPercentageCoins(this.percentageCoins);
         }
+
     
     }
 

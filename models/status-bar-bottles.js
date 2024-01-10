@@ -54,5 +54,14 @@ class StatusBarBottles extends DrawableObject {
         this.setPercentageBottles(this.percentageBottles);
     }
 
+    throwBottle() {
+        this.percentageBottles = this.percentageBottles - 20;
+        if (this.percentageBottles < 0) {
+            this.percentageBottles = 0;
+        }
+        console.log(this.percentageBottles);
+        this.setPercentageBottles(this.percentageBottles);
+    }
+
     }
 

@@ -10,7 +10,7 @@ class World {
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
-    collectedCoinsCount=0;
+    collectedBottlesCount=0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,19 +28,23 @@ class World {
     run() {
         setInterval(()=> {
             this.checkCollisionsEnemy();
-            this.checkThrowObjects();
-            this.checkCollectionCoins();
-            this.checkCollectionBottles();
+            this.checkCollisionsCoins();
+            this.checkCollissionsBottles();
+            this.checkThrowObjects();  
 
         }, 200);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle_rotation = new ThrowableObject(this.character.x + 100, this.character.y+100); 
+        if (this.keyboard.D && this.collectedBottlesCount > 0) {
+            let bottle_rotation = new ThrowableObject(this.character.x + 100, this.character.y + 100); 
             this.throwableObjects.push(bottle_rotation);
+            this.collectedBottlesCount--;
+            this.statusBarBottles.throwBottle();
+            console.log('Flasche geworfen, noch übrig ' + this.collectedBottlesCount);
         }
     }
+    
 
     checkCollisionsEnemy() {
         setInterval(() => {
@@ -53,7 +57,7 @@ class World {
         }, 200);
     }
 
-    checkCollectionCoins() {
+    checkCollisionsCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 console.log('Mit Coin kollidiert');
@@ -67,12 +71,16 @@ class World {
          });
     }
 
-    checkCollectionBottles() {
+    checkCollissionsBottles() {
         this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
-                console.log('Mit Flasche kollidiert');
+            if (this.character.isColliding(bottle) && this.collectedBottlesCount <5 ) {
+                this.collectedBottlesCount++;
                 this.statusBarBottles.collectBottle();
-               this.level.bottles.splice(index, 1);
+                console.log('Mit Flasche kollidiert'+this.collectedBottlesCount);
+                if (this.collectedBottlesCount<6) {
+                    this.level.bottles.splice(index, 1);  
+                }
+               
                 //collectCoinSound.play();
                 //this.increaseCoinBar();
                 //this.coinCollected(coin);
